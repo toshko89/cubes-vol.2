@@ -1,5 +1,5 @@
 const express = require('express');
-const Cube = require('./../models/Cube.js');
+const cubeService = require('./../services/cubeService.js');
 
 const cubeControler = new express.Router();
 
@@ -11,8 +11,7 @@ cubeControler.post('/create', async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
         if (name !== '' && description !== '' && imageUrl !== '' && difficulty !== '') {
-            let newCube = await new Cube({name, description, imageUrl, difficulty});
-            await newCube.save();
+            await cubeService.add(name, description, imageUrl, difficulty);
             res.redirect('/');
         }
     } catch (err) {
@@ -21,9 +20,9 @@ cubeControler.post('/create', async (req, res) => {
     }
 })
 
-    cubeControler.get('/:cubeId', (req, res) => {
-        let currentCube = Cube.findCube(req.params.cubeId)
-        res.render('details', { ...currentCube });
-    })
+cubeControler.get('/:cubeId', (req, res) => {
+    let currentCube = Cube.findCube(req.params.cubeId)
+    res.render('details', { ...currentCube });
+})
 
-    module.exports = cubeControler;
+module.exports = cubeControler;
