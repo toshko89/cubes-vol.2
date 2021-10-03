@@ -19,7 +19,7 @@ app.set('view engine', 'hbs');
 
 app.use(router);
 
-mongoose.connect('mongodb://locallhost:27017/cubes')
+mongoose.connect('mongodb://localhost:27017/cubes')
     .then(app.listen(port, () => console.log(`Express running on port: ${port}...`)))
     .catch(err => {
         console.log(err);
