@@ -6,17 +6,17 @@ async function add(name, description, imageUrl, difficulty) {
 
 }
 
-function findCube(cubeId) {
-    
+async function findCube(cubeId) {
+    let result = await Cube.findById(cubeId).lean();
+    return result;
 }
 
-async function getAll(){
+async function getAll() {
     return Cube.find({}).lean();
 }
 
 async function searchCube(search, from, to) {
-    let result = Cube.find({})
-
+    let result = await Cube.find({}).lean()
     if (search) {
         result = result.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
     }

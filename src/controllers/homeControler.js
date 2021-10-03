@@ -5,7 +5,7 @@ const homeRouter = new express.Router();
 
 homeRouter.get('/', async (req, res) => {
     try {
-        let cubes = await cubeService.getAll;
+        let cubes = await cubeService.getAll();
         res.render('index', { cubes });
     } catch (err) {
         console.log(err);
@@ -14,10 +14,14 @@ homeRouter.get('/', async (req, res) => {
 
 });
 
-homeRouter.get('/search', (req, res) => {
+homeRouter.get('/search', async (req, res) => {
     let { search, from, to } = req.query;
-    let cubes = cubeService.searchCube(search, from, to);
-    res.render('index', { cubes });
+    try {
+        let cubes = await cubeService.searchCube(search, from, to);
+        res.render('index', { cubes });
+    }catch(err){
+        console.log(err);
+    }
 })
 
 module.exports = homeRouter;

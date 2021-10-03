@@ -20,9 +20,13 @@ cubeControler.post('/create', async (req, res) => {
     }
 })
 
-cubeControler.get('/:cubeId', (req, res) => {
-    let currentCube = Cube.findCube(req.params.cubeId)
-    res.render('details', { ...currentCube });
+cubeControler.get('/:cubeId', async (req, res) => {
+    try {
+        let currentCube = await cubeService.findCube(req.params.cubeId)
+        res.render('details', { ...currentCube });
+    }catch(err){
+        console.log(err);
+        res.render('404');
+    }
 })
-
 module.exports = cubeControler;
