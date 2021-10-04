@@ -1,9 +1,7 @@
-const attachController = require('express').Router();
-const accessoryService = require('./../services/accessoryService.js');
+const attachAccessoryController = require('express').Router();
 
-
-attachController.get('/accessory/:Id',(req,res)=>{
+attachAccessoryController.get('/accessory/:Id',(req,res)=>{
     res.render('accessory/attach-accessory');
 })
 
-module.exports = attachController;
+module.exports = attachAccessoryController;

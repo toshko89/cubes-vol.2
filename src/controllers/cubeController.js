@@ -1,7 +1,10 @@
 const express = require('express');
 const cubeService = require('../services/cubeService.js');
+const attachAccessoryController = require('./attachController.js');
 
 const cubeController = new express.Router();
+
+cubeController.use('/:cubeId/accessory',attachAccessoryController);
 
 cubeController.get('/create', (req, res) => {
     res.render('create');
@@ -23,12 +26,11 @@ cubeController.post('/create', async (req, res) => {
 cubeController.get('/:cubeId', async (req, res) => {
     try {
         let currentCube = await cubeService.findCube(req.params.cubeId)
-        res.render('details', { ...currentCube });
+        res.render('partials/details', { ...currentCube });
     }catch(err){
         console.log(err);
         res.render('404');
     }
 })
-
 
 module.exports = cubeController;
