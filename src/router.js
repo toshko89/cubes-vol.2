@@ -1,12 +1,13 @@
 const express = require('express');
-const homeControler = require('./controllers/homeControler.js');
-const cubeControler = require('./controllers/cubeControler.js');
+const homeController = require('./controllers/homeController.js');
+const cubeController = require('./controllers/cubeController.js');
+const accessoryController = require('./controllers/accessoryController.js')
 
 const router = new express.Router();
 
-router.use(homeControler);
-
-router.use('/cube',cubeControler);
+router.use(homeController);
+router.use('/cube',cubeController);
+router.use('/accessory',accessoryController);
 
 router.get('/about',(req,res)=>{
     res.render('about')
