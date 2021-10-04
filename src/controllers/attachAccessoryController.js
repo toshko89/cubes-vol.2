@@ -13,4 +13,13 @@ attachAccessoryController.get('/attach', async (req, res) => {
     }
 })
 
+attachAccessoryController.post('/attach',async(req,res)=>{
+    try{
+        
+    }catch (err){
+        console.log(err);
+        res.status(400).send(err.message).end();
+    }
+})
+
 module.exports = attachAccessoryController;
