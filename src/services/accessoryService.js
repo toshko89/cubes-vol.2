@@ -10,7 +10,7 @@ async function getAccessory(accessoryId){
 }
 
 async function getAllAccessories(){
-    return Accessory.find({});
+    return Accessory.find({}).lean();
 }
 
 const accessoryService = {
