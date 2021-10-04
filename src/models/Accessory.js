@@ -11,7 +11,7 @@ const accesorySchema = new mongoose.Schema({
         required:true,
         validate:{
             validator:function(v){
-                return /https?:\/\//i.test();
+                return /https?:\/\//i.test(v);
             }
         }
     },
