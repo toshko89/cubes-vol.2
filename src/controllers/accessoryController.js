@@ -12,12 +12,14 @@ accessoryController.post('/create', async (req, res) => {
         let { name, description, imageUrl } = req.body;
         if (name !== '' && description !== '' && imageUrl !== '') {
             await accessoryService.add(name, description, imageUrl);
-            res.redirect('/');
+            return res.redirect('/');
         }
+
+        res.status(400).render('400',{message:'All fields are required'});
 
     } catch (err) {
         console.log(err);
-        res.status(400).send(err.message).end();
+        res.status(400).render('400',{message:err.message});
     }
 })
 
