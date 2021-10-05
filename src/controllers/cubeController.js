@@ -19,7 +19,7 @@ cubeController.post('/create', async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        res.redirect('/cube/create');
+        res.status(400).render('400',{message:err.message,path:req.originalUrl});
     }
 })
 

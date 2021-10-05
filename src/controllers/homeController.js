@@ -20,6 +20,7 @@ homeRouter.get('/search', async (req, res) => {
         res.render('index', { cubes });
     }catch(err){
         console.log(err);
+        res.render('404');
     }
 })
 
