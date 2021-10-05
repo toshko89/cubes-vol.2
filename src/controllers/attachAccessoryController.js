@@ -9,7 +9,7 @@ attachAccessoryController.get('/attach', async (req, res) => {
         let accessories = await accessoryService.getAllAccessories();
         res.render('accessory/attach-accessory',{cube,accessories});
     } catch (err){
-        res.status(400).render('400',{message:err.message});
+        res.render('404')
     }
 })
 

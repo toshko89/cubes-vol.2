@@ -15,7 +15,7 @@ accessoryController.post('/create', async (req, res) => {
             return res.redirect('/');
         }
 
-        res.status(400).render('400',{message:'All fields are required'});
+        res.status(400).render('400',{message:'All fields are required',path:req.originalUrl});
 
     } catch (err) {
         console.log(err);
