@@ -13,7 +13,7 @@ async function findCube(cubeId) {
 }
 
 async function getAll() {
-    return Cube.find({}).lean();
+    return Cube.find({}).sort({'difficulty':1}).lean();
 }
 
 async function searchCube(search, from, to) {

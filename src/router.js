@@ -9,7 +9,7 @@ const router = new express.Router();
 router.use(homeController);
 router.use('/cube',cubeController);
 router.use('/accessory',accessoryController);
-router.use('/attach',attachController);
+// router.use('/attach',attachController);
 
 router.get('/about',(req,res)=>{
     res.render('about')
