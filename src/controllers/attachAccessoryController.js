@@ -5,8 +5,10 @@ const accessoryService = require('./../services/accessoryService.js');
 
 attachAccessoryController.get('/attach', async (req, res) => {
     try {
-        let cube = await cubeService.findCube(req.params.cubeId)
-        let accessories = await accessoryService.getAllAccessories();
+        let [cube, accessories] = await Promise.all([
+            cubeService.findCube(req.params.cubeId),
+            accessoryService.getAllAccessories()
+        ]);
         res.render('accessory/attach-accessory', { cube, accessories });
     } catch (err) {
         res.render('404')
@@ -15,8 +17,13 @@ attachAccessoryController.get('/attach', async (req, res) => {
 
 attachAccessoryController.post('/attach', async (req, res) => {
     try {
-        let result = await cubeService.attachAccessory(req.params.cubeId, req.body.accessory);
-        console.log(result);
+        let [result, cube] = await Promise.all([
+            cubeService.attachAccessory(req.params.cubeId, req.body.accessory),
+            cubeService.findCube(req.params.cubeId),
+            // accessoryService.getAllAccessories()
+        ])
+
+        res.render('partials/details', { ...cube });
     } catch (err) {
         console.log(err);
         res.status(400).render('400', { message: err.message, path: req.originalUrl });

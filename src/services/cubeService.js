@@ -8,7 +8,7 @@ async function add(name, description, imageUrl, difficulty) {
 }
 
 async function findCube(cubeId) {
-    let result = await Cube.findById(cubeId).lean();
+    let result = await Cube.findById(cubeId).populate('accessories').lean();
     return result;
 }
 
@@ -34,11 +34,11 @@ async function searchCube(search, from, to) {
 }
 
 async function attachAccessory(cubeId, accessoryId) {
-    let cube = await Cube.findById(cubeId).lean();
-    let accessory = await Accesory.findById(accessoryId).lean();
+    let cube = await Cube.findById(cubeId);
+    let accessory = await Accesory.findById(accessoryId);
 
     cube.accessories.push(accessory);
-
+    cube.save();
     return cube;
 }
 

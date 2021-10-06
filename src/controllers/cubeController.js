@@ -25,8 +25,8 @@ cubeController.post('/create', async (req, res) => {
 
 cubeController.get('/:cubeId', async (req, res) => {
     try {
-        let currentCube = await cubeService.findCube(req.params.cubeId)
-        res.render('partials/details', { ...currentCube });
+        let cube = await cubeService.findCube(req.params.cubeId)
+        res.render('partials/details', { ...cube });
     } catch (err) {
         console.log(err);
         res.render('404');
