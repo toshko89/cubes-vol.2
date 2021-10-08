@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Accesory = require('./Accessory.js');
 
+
 const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -37,6 +38,12 @@ const cubeSchema = new mongoose.Schema({
         {
             type: mongoose.Types.ObjectId,
             ref: 'Accessory'
+        }
+    ],
+    user: [
+        {
+            type:mongoose.Types.ObjectId,
+            ref:'User'
         }
     ]
 });
