@@ -1,6 +1,7 @@
 const authRouter = require('express').Router();
 const authService = require('../services/authService.js');
-
+const User = require('../models/User.js')
+const config = require('../config/config.json');
 
 authRouter.get('/register', (req, res) => {
     res.render('auth-pages/register');
@@ -16,8 +17,8 @@ authRouter.post('/register', async (req, res) => {
             throw new Error('Please re-enter your password');
         }
 
-        const match = await authService.checkUsername(username);
-        if (match.length > 0) {
+        const match = await User.checkUsername(username);
+        if (match) {
             throw new Error('Chosen username is taken');
         }
 
@@ -34,15 +35,18 @@ authRouter.get('/login', (req, res) => {
     res.render('auth-pages/login');
 });
 
-authRouter.post('/login', (req, res) => {
+authRouter.post('/login', async (req, res) => {
     let { username, password } = req.body;
     try {
         if (username == '' || password == '') {
             throw new Error('All field are required!');
         }
+        const token = await authService.login(username, password);
+        res.cookie(config.TOKEN_COOKIE_NAME, token);
+        res.redirect('/');
 
     } catch (err) {
-
+        res.render('auth-pages/login', { err: err.message });
     }
 });
 

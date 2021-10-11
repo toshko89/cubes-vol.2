@@ -7,6 +7,6 @@
         "PORT": 6001,
         "DB_CONNECTION_STRING": ""
     },
-
-    "JWT_SECRET":"something secret 123"
+    "JWT_SECRET":"something secret 123",
+    "TOKEN_COOKIE_NAME":"app_token"
 }

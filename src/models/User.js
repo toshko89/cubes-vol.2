@@ -23,6 +23,10 @@ userSchema.pre('save', function (next) {
         });
 });
 
+userSchema.static('checkUsername', function (username) {
+    return this.findOne({ username }).lean();
+});
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

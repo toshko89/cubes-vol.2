@@ -3,18 +3,24 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
 const config = require('../config/config.json');
 
-async function checkUsername(username) {
-    const match = await User.find().where({ username: username });
-    return match;
-}
-
 async function registerUser(username, password) {
-    // const hash = await bcrypt.hash(password, 10);
     return await User.create({ username, password });
 }
 
 async function login(username, password) {
+    const user = await User.checkUsername(username);
+    
+    if(!user){
+        throw new Error('Wrong username or password');
+    }
 
+    const pasword = bcrypt.compare(password,user.password);
+    
+    if(!pasword){
+        throw new Error('Wrong username or password');
+    }
+
+    return createToken(user)
 }
 
 function createToken(user) {
@@ -23,13 +29,13 @@ function createToken(user) {
 }
 
 function verifyToken(token, secretKey) {
-
+    
 }
 
-const authService = {
+const authService =     {
     registerUser,
     createToken,
-    checkUsername
+    login,
 }
 
 module.exports = authService;
