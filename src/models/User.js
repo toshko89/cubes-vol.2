@@ -11,15 +11,14 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
         minlength:4,
-        maxlength:10
     },
 
-    cubes: [
-        {
-            type:mongoose.Types.ObjectId,
-            ref:'Cubes'
-        }
-    ]
+    // cubes: [
+    //     {
+    //         type:mongoose.Types.ObjectId,
+    //         ref:'Cubes'
+    //     }
+    // ]
 
 })
 

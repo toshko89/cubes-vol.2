@@ -5,7 +5,7 @@ const attachAccessoryController = require('./attachAccessoryController.js');
 const cubeController = new express.Router();
 
 cubeController.get('/create', (req, res) => {
-    res.render('create');
+    res.render('cube-pages/create-cube');
 });
 
 cubeController.post('/create', async (req, res) => {

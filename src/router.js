@@ -9,6 +9,7 @@ router.use(homeController);
 router.use('/cube',cubeController);
 router.use('/accessory',accessoryController);
 
+
 router.get('/about',(req,res)=>{
     res.render('about')
 });
