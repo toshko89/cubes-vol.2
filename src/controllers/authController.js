@@ -16,8 +16,15 @@ authRouter.post('/register', async (req, res) => {
         if (password !== repeatPassword) {
             throw new Error('Please re-enter your password');
         }
+        const match = await authService.checkUsername(username);
+
+        if (match) {
+            throw new Error('Chosen username is taken');
+        }
+
         await authService.registerUser(username, password);
-        res.redirect('/');
+
+        res.redirect('/login');
     } catch (err) {
         console.log(err);
     }
@@ -29,14 +36,14 @@ authRouter.get('/login', (req, res) => {
 
 authRouter.post('/login', (req, res) => {
     let { username, password } = req.body;
-    try{
+    try {
         if (username == '' || password == '') {
             throw new Error('All field are required!');
         }
-        
 
 
-    }catch(err){
+
+    } catch (err) {
 
     }
 });
