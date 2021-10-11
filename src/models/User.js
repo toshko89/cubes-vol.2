@@ -1,27 +1,28 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
-        minlength:5,
+        minlength: 5,
     },
 
-    password:{
-        type:String,
-        required:true,
-        minlength:4,
+    password: {
+        type: String,
+        required: true,
+        minlength: [6, 'Your password should be at least 6 characters'],
     },
+});
 
-    // cubes: [
-    //     {
-    //         type:mongoose.Types.ObjectId,
-    //         ref:'Cubes'
-    //     }
-    // ]
+userSchema.pre('save', function (next) {
+    bcrypt.hash(this.password, 10)
+        .then(hash => {
+            this.password = hash;
+            next();
+        });
+});
 
-})
-
-const User = mongoose.model('User',userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

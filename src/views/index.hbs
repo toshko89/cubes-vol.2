@@ -1,6 +1,7 @@
 <main>
   <h1>Browser</h1>
   <form action="/search" method="GET">
+    {{#if err}}<span class="error">{{err}}</span>{{/if}}
     <input type="text" class="search" name="search" placeholder="Search...">
     <input type="number" name="from" class="difficulty" placeholder="Difficulty from...">
     <span>-</span>

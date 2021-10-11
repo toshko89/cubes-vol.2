@@ -18,9 +18,8 @@ homeRouter.get('/search', async (req, res) => {
         let { search, from, to } = req.query;
         let cubes = await cubeService.searchCube(search, from, to);
         res.render('index', { cubes });
-    }catch(err){
-        console.log(err);
-        res.render('404');
+    } catch (err) {
+        res.render('index', { err });
     }
 })
 

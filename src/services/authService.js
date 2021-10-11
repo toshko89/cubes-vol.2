@@ -3,15 +3,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User.js');
 const config = require('../config/config.json');
 
-async function checkUsername(username){
+async function checkUsername(username) {
     const match = await User.find().where({ username: username });
     return match;
 }
 
 async function registerUser(username, password) {
-    const hash = await bcrypt.hash(password, 10);
-    const user = await User.create({ username, password: hash });
-    return user;
+    // const hash = await bcrypt.hash(password, 10);
+    return await User.create({ username, password });
 }
 
 async function login(username, password) {
@@ -23,7 +22,7 @@ function createToken(user) {
     return token;
 }
 
-function verifyToken(token, secretKey){
+function verifyToken(token, secretKey) {
 
 }
 

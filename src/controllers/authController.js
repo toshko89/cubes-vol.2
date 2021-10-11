@@ -12,21 +12,21 @@ authRouter.post('/register', async (req, res) => {
         if (username == '' || password == '' || repeatPassword == '') {
             throw new Error('All field are required!');
         }
-
         if (password !== repeatPassword) {
             throw new Error('Please re-enter your password');
         }
-        const match = await authService.checkUsername(username);
 
-        if (match) {
+        const match = await authService.checkUsername(username);
+        if (match.length > 0) {
             throw new Error('Chosen username is taken');
         }
 
         await authService.registerUser(username, password);
 
         res.redirect('/login');
+
     } catch (err) {
-        console.log(err);
+        res.render('auth-pages/register', { err: err.message })
     }
 });
 
@@ -40,8 +40,6 @@ authRouter.post('/login', (req, res) => {
         if (username == '' || password == '') {
             throw new Error('All field are required!');
         }
-
-
 
     } catch (err) {
 
