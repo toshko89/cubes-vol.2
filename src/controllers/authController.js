@@ -10,7 +10,7 @@ authRouter.get('/register', (req, res) => {
 authRouter.post('/register', async (req, res) => {
     let { username, password, repeatPassword } = req.body;
     try {
-        if (username == '' || password == '' || repeatPassword == '') {
+        if (username.trim() == '' || password.trim() == '' || repeatPassword.trim() == '') {
             throw new Error('All field are required!');
         }
         if (password !== repeatPassword) {
@@ -38,7 +38,7 @@ authRouter.get('/login', (req, res) => {
 authRouter.post('/login', async (req, res) => {
     let { username, password } = req.body;
     try {
-        if (username == '' || password == '') {
+        if (username.trim() == '' || password.trim() == '') {
             throw new Error('All field are required!');
         }
         const token = await authService.login(username, password);
