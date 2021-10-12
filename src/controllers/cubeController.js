@@ -11,7 +11,7 @@ cubeController.get('/create', (req, res) => {
 cubeController.post('/create', async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
-        if (name !== '' && description !== '' && imageUrl !== '' && difficulty !== '') {
+        if (name.trim() !== '' && description.trim() !== '' && imageUrl.trim() !== '' && difficulty.trim() !== '') {
             await cubeService.add(name, description, imageUrl, difficulty);
             return res.redirect('/');
         }

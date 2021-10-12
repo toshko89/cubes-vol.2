@@ -42,7 +42,7 @@ authRouter.post('/login', async (req, res) => {
             throw new Error('All field are required!');
         }
         const token = await authService.login(username, password);
-        res.cookie(config.TOKEN_COOKIE_NAME, token);
+        res.cookie(config.TOKEN_COOKIE_NAME, token, { httpOnly: true });
         res.redirect('/');
 
     } catch (err) {
