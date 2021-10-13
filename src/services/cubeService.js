@@ -13,22 +13,24 @@ async function findCube(cubeId) {
 }
 
 async function getAll() {
-    return Cube.find({}).sort({'difficulty':1}).lean();
+    return Cube.find({}).sort({ 'difficulty': 1 }).lean();
 }
 
 async function searchCube(search, from, to) {
     let result;
     if (search) {
-        result = await Cube.find({'name':{$regex:search,'$options' : 'i'}});
+        result = await Cube.find({ 'name': { $regex: search, '$options': 'i' } }).lean();
         // result = result.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
     }
     if (from) {
-        from = Number(from);
-        result = result.filter(x => x.difficulty >= from);
+        // from = Number(from);
+        result = await Cube.find({ 'difficulty': { $gte:from } }).lean();
+        // result = result.filter(x => x.difficulty >= from);
     }
     if (to) {
-        to = Number(to);
-        result = result.filter(x => x.difficulty <= to);
+        // to = Number(to);
+        result = await Cube.find({ 'difficulty': { $lte:to } }).lean();
+        // result = result.filter(x => x.difficulty <= to);
     }
 
     return result;
@@ -45,9 +47,9 @@ async function attachAccessory(cubeId, accessoryId) {
 
 const cubeService = {
     add,
+    getAll,
     findCube,
     searchCube,
-    getAll,
     attachAccessory
 }
 
