@@ -51,6 +51,7 @@ authRouter.post('/login', async (req, res) => {
 });
 
 authRouter.get('/logout', (req, res) => {
+    res.clearCookie(config.TOKEN_COOKIE_NAME);
     res.redirect('/');
 })
 

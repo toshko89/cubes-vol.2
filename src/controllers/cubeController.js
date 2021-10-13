@@ -22,7 +22,7 @@ cubeController.post('/create',isAuth, async (req, res) => {
         console.log(err);
         res.status(400).render('400',{message:err.message,path:req.originalUrl});
     }
-})
+});
 
 cubeController.get('/:cubeId', async (req, res) => {
     try {
@@ -34,6 +34,6 @@ cubeController.get('/:cubeId', async (req, res) => {
     }
 });
 
-cubeController.use('/:cubeId/accessory', attachAccessoryController);
+cubeController.use('/:cubeId/accessory',isAuth, attachAccessoryController);
 
 module.exports = cubeController;
