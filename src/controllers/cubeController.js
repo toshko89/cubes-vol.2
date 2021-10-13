@@ -12,8 +12,9 @@ cubeController.get('/create',isAuth, (req, res) => {
 cubeController.post('/create',isAuth, async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
-        if (name.trim() !== '' && description.trim() !== '' && imageUrl.trim() !== '' && difficulty.trim() !== '') {
-            await cubeService.add(name, description, imageUrl, difficulty);
+        let creator = req.user;
+        if (name.trim() !== '' && description.trim() !== '' && imageUrl.trim() !== '') {
+            await cubeService.add(name, description, imageUrl, difficulty,creator);
             return res.redirect('/');
         }
         res.status(400).render('400',{message:'All fields are required',path:req.originalUrl});

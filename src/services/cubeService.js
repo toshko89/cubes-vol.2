@@ -1,8 +1,8 @@
 const Accesory = require('../models/Accessory.js');
 const Cube = require('./../models/Cube.js');
 
-async function add(name, description, imageUrl, difficulty) {
-    let newCube = await new Cube({ name, description, imageUrl, difficulty });
+async function add(name, description, imageUrl, difficulty, creator) {
+    let newCube = await new Cube({ name, description, imageUrl, difficulty, creator });
     return newCube.save();
 
 }
@@ -24,12 +24,12 @@ async function searchCube(search, from, to) {
     }
     if (from) {
         // from = Number(from);
-        result = await Cube.find({ 'difficulty': { $gte:from } }).lean();
+        result = await Cube.find({ 'difficulty': { $gte: from } }).lean();
         // result = result.filter(x => x.difficulty >= from);
     }
     if (to) {
         // to = Number(to);
-        result = await Cube.find({ 'difficulty': { $lte:to } }).lean();
+        result = await Cube.find({ 'difficulty': { $lte: to } }).lean();
         // result = result.filter(x => x.difficulty <= to);
     }
 
