@@ -27,7 +27,7 @@ authRouter.post('/register', async (req, res) => {
         res.redirect('/login');
 
     } catch (err) {
-        res.render('auth-pages/register', { err: err.message })
+        res.render('auth-pages/register', { err: err.message, username: username })
     }
 });
 

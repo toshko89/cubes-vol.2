@@ -13,14 +13,14 @@ async function login(username, password) {
     if(!user){
         throw new Error('Wrong username or password');
     }
-
-    const pasword = bcrypt.compare(password,user.password);
     
+    const pasword = await bcrypt.compare(password,user.password);
+
     if(!pasword){
         throw new Error('Wrong username or password');
     }
 
-    return createToken(user)
+    return createToken(user);
 }
 
 function createToken(user) {
@@ -29,12 +29,13 @@ function createToken(user) {
 }
 
 function verifyToken(token, secretKey) {
-    
+    return jwt.verify(token,secretKey);
 }
 
 const authService =     {
     registerUser,
     createToken,
+    verifyToken,
     login,
 }
 
