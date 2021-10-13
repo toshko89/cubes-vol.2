@@ -17,9 +17,10 @@ async function getAll() {
 }
 
 async function searchCube(search, from, to) {
-    let result = await Cube.find({}).lean()
+    let result;
     if (search) {
-        result = result.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
+        result = await Cube.find({'name':{$regex:search,'$options' : 'i'}});
+        // result = result.filter(x => x.name.toLowerCase().includes(search.toLowerCase()));
     }
     if (from) {
         from = Number(from);
