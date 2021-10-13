@@ -1,14 +1,15 @@
 const express = require('express');
+const { isAuth } = require('../middleWares/authMiddleWare.js');
 const cubeService = require('../services/cubeService.js');
 const attachAccessoryController = require('./attachAccessoryController.js');
 
 const cubeController = new express.Router();
 
-cubeController.get('/create', (req, res) => {
+cubeController.get('/create',isAuth, (req, res) => {
     res.render('cube-pages/create-cube');
 });
 
-cubeController.post('/create', async (req, res) => {
+cubeController.post('/create',isAuth, async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
         if (name.trim() !== '' && description.trim() !== '' && imageUrl.trim() !== '' && difficulty.trim() !== '') {
@@ -31,7 +32,7 @@ cubeController.get('/:cubeId', async (req, res) => {
         console.log(err);
         res.render('404');
     }
-})
+});
 
 cubeController.use('/:cubeId/accessory', attachAccessoryController);
 
