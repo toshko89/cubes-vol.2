@@ -1,7 +1,10 @@
 const attachAccessoryController = require('express').Router({ mergeParams: true });
+const { isAuth } = require('../middleWares/authMiddleWare.js');
+const { isOwner } = require('../middleWares/cubeOwnerMiddleWare.js');
 const cubeService = require('../services/cubeService.js');
 const accessoryService = require('./../services/accessoryService.js');
 
+attachAccessoryController.use(isAuth);
 
 attachAccessoryController.get('/attach', async (req, res) => {
     try {
@@ -14,13 +17,13 @@ attachAccessoryController.get('/attach', async (req, res) => {
     }
 })
 
-attachAccessoryController.post('/attach', async (req, res) => {
+attachAccessoryController.post('/attach', isOwner, async (req, res) => {
     try {
         await Promise.all([
             cubeService.attachAccessory(req.params.cubeId, req.body.accessory),
             cubeService.findCube(req.params.cubeId),
         ]);
-        
+
         res.redirect(`/cube/${req.params.cubeId}`);
     } catch (err) {
         console.log(err);

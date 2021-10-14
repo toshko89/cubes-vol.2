@@ -1,6 +1,6 @@
 const express = require('express');
 const { isAuth } = require('../middleWares/authMiddleWare.js');
-const { isOwner } = require('../middleWares/cubeAuthMiddleWare.js');
+const { isOwner } = require('../middleWares/cubeOwnerMiddleWare.js');
 const cubeService = require('../services/cubeService.js');
 const attachAccessoryController = require('./attachAccessoryController.js');
 
@@ -36,19 +36,33 @@ cubeController.get('/:cubeId', async (req, res) => {
     }
 });
 
-cubeController.get('/:cubeId/delete',isAuth, isOwner, (req, res) => {
+cubeController.get('/:cubeId/delete', isAuth, isOwner, (req, res) => {
     res.render('cube-pages/delete-cube', req.cube);
 });
 
-cubeController.post('/:cubeId/delete',isAuth, isOwner, async (req, res) => {
+cubeController.post('/:cubeId/delete', isAuth, isOwner, async (req, res) => {
     try {
-        console.log(req.params.cubeId);
-        console.log(req.cube._id);
         await cubeService.deleteCube(req.cube._id);
         res.redirect('/');
     }
     catch (err) {
         console.log(err);
+    }
+});
+
+cubeController.get('/:cubeId/edit', isAuth, isOwner, (req, res) => {
+    res.render('cube-pages/edit-cube', req.cube);
+});
+
+cubeController.post('/:cubeId/edit', isAuth, isOwner, async (req, res) => {
+    try {
+        let { name, description, imageUrl, difficulty } = req.body;
+        let cube = { name, description, imageUrl, difficulty };
+        await cubeService.updateCube(req.cube._id,cube);
+        res.redirect('/');
+    } catch (err) {
+        console.log(err);
+        res.redirect(`/cube/${req.params.cubeId}`);
     }
 });
 

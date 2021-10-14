@@ -5,7 +5,8 @@ const Accesory = require('./Accessory.js');
 const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minlength:[4,'Name must be at least 4 letters']
     },
     description: {
         type: String,
