@@ -14,15 +14,14 @@ exports.auth = function (req, res, next) {
         res.status(401).redirect('/login');
         throw new Error('You are not authorized to view this page, please login/regiter');
     }
-    req.user = {
-        _id: tokenVerify._id,
-        username: tokenVerify.username,
-    }
 
-    res.locals.user = {
+    const user = {
         _id: tokenVerify._id,
         username: tokenVerify.username,
     }
+    
+    req.user = user;
+    res.locals.user = user;
 
     next();
 }

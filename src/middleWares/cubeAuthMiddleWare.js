@@ -6,7 +6,6 @@ exports.isOwner = async function (req, res, next) {
     let creatorId = cube.creator[0]._id;
     if (creatorId == req.user._id) {
         req.cube = cube;
-
         next();
     } else {
         next('you are not authorized to edit this cube')

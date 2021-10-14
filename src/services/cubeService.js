@@ -7,6 +7,10 @@ async function add(name, description, imageUrl, difficulty, creator) {
 
 }
 
+function deleteCube(cubeId){
+    return Cube.findByIdAndDelete(cubeId);
+}
+
 async function findCube(cubeId) {
     let result = await Cube.findById(cubeId).populate('accessories').populate('creator').lean();
     return result;
@@ -51,6 +55,7 @@ const cubeService = {
     getAll,
     findCube,
     searchCube,
+    deleteCube,
     attachAccessory
 }
 

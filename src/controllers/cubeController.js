@@ -6,23 +6,23 @@ const attachAccessoryController = require('./attachAccessoryController.js');
 
 const cubeController = new express.Router();
 
-cubeController.get('/create',isAuth, (req, res) => {
+cubeController.get('/create', isAuth, (req, res) => {
     res.render('cube-pages/create-cube');
 });
 
-cubeController.post('/create',isAuth, async (req, res) => {
+cubeController.post('/create', isAuth, async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
         let creator = req.user;
         if (name.trim() !== '' && description.trim() !== '' && imageUrl.trim() !== '') {
-            await cubeService.add(name, description, imageUrl, difficulty,creator);
+            await cubeService.add(name, description, imageUrl, difficulty, creator);
             return res.redirect('/');
         }
-        res.status(400).render('400',{message:'All fields are required',path:req.originalUrl});
+        res.status(400).render('400', { message: 'All fields are required', path: req.originalUrl });
 
     } catch (err) {
         console.log(err);
-        res.status(400).render('400',{message:err.message,path:req.originalUrl});
+        res.status(400).render('400', { message: err.message, path: req.originalUrl });
     }
 });
 
@@ -36,11 +36,22 @@ cubeController.get('/:cubeId', async (req, res) => {
     }
 });
 
-cubeController.get('/:cubeId/delete',isOwner,(req,res)=>{
-    console.log(req.cube);
-    res.render('cube-pages/delete-cube',req.cube);
-})
+cubeController.get('/:cubeId/delete',isAuth, isOwner, (req, res) => {
+    res.render('cube-pages/delete-cube', req.cube);
+});
 
-cubeController.use('/:cubeId/accessory',isAuth, attachAccessoryController);
+cubeController.post('/:cubeId/delete',isAuth, isOwner, async (req, res) => {
+    try {
+        console.log(req.params.cubeId);
+        console.log(req.cube._id);
+        await cubeService.deleteCube(req.cube._id);
+        res.redirect('/');
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
+cubeController.use('/:cubeId/accessory', isAuth, attachAccessoryController);
 
 module.exports = cubeController;
