@@ -8,9 +8,10 @@ async function add(name, description, imageUrl, difficulty, creator) {
 }
 
 async function findCube(cubeId) {
-    let result = await Cube.findById(cubeId).populate('accessories').lean();
+    let result = await Cube.findById(cubeId).populate('accessories').populate('creator').lean();
     return result;
 }
+
 
 async function getAll() {
     return Cube.find({}).sort({ 'difficulty': 1 }).lean();

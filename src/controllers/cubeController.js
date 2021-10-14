@@ -1,5 +1,6 @@
 const express = require('express');
 const { isAuth } = require('../middleWares/authMiddleWare.js');
+const { isOwner } = require('../middleWares/cubeAuthMiddleWare.js');
 const cubeService = require('../services/cubeService.js');
 const attachAccessoryController = require('./attachAccessoryController.js');
 
@@ -27,13 +28,18 @@ cubeController.post('/create',isAuth, async (req, res) => {
 
 cubeController.get('/:cubeId', async (req, res) => {
     try {
-        let cube = await cubeService.findCube(req.params.cubeId)
+        let cube = await cubeService.findCube(req.params.cubeId);
         res.render('partials/details', { ...cube });
     } catch (err) {
         console.log(err);
         res.render('404');
     }
 });
+
+cubeController.get('/:cubeId/delete',isOwner,(req,res)=>{
+    console.log(req.cube);
+    res.render('cube-pages/delete-cube',req.cube);
+})
 
 cubeController.use('/:cubeId/accessory',isAuth, attachAccessoryController);
 
