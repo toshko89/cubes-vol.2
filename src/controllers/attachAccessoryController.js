@@ -5,6 +5,7 @@ const cubeService = require('../services/cubeService.js');
 const accessoryService = require('./../services/accessoryService.js');
 
 attachAccessoryController.use(isAuth);
+attachAccessoryController.use(isOwner);
 
 attachAccessoryController.get('/attach', async (req, res) => {
     try {

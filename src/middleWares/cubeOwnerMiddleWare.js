@@ -3,9 +3,7 @@ const cubeService = require('../services/cubeService.js');
 exports.isOwner = async function (req, res, next) {
     try {
         let cube = await cubeService.findCube(req.params.cubeId);
-        let creatorId = cube.creator[0]._id;
-        
-        if (creatorId == req.user._id) {
+        if (cube.creator[0]._id == req.user._id) {
             req.cube = cube;
             next();
         } else {

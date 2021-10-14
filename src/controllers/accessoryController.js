@@ -1,5 +1,6 @@
 const express = require('express');
 const { isAuth } = require('../middleWares/authMiddleWare.js');
+const { isOwner } = require('../middleWares/cubeOwnerMiddleWare.js');
 const accessoryService = require('./../services/accessoryService.js');
 
 const accessoryController = new express.Router();
