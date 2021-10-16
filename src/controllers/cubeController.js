@@ -29,7 +29,8 @@ cubeController.post('/create', isAuth, async (req, res) => {
 cubeController.get('/:cubeId', async (req, res) => {
     try {
         let cube = await cubeService.findCube(req.params.cubeId);
-        res.render('partials/details', { ...cube });
+        let isOwnCube = cube.creator._id == req.user._id;
+        res.render('partials/details', { ...cube,isOwnCube});
     } catch (err) {
         console.log(err);
         res.render('404');

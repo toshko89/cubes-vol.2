@@ -6,7 +6,7 @@ const cubeSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minlength:[4,'Name must be at least 4 letters']
+        minlength: [4, 'Name must be at least 4 letters']
     },
     description: {
         type: String,
@@ -42,12 +42,11 @@ const cubeSchema = new mongoose.Schema({
         }
     ],
 
-    creator: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: 'User'
-        }
-    ]
+    creator: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }
+
 });
 
 const Cubes = mongoose.model('Cubes', cubeSchema);
