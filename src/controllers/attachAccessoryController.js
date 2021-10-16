@@ -14,7 +14,7 @@ attachAccessoryController.get('/attach', async (req, res) => {
         res.render('accessory/attach-accessory', { cube, accessories });
     } catch (err) {
         console.log(err);
-        res.render('404')
+        res.render('404',err)
     }
 })
 

@@ -30,8 +30,8 @@ cubeController.get('/:cubeId', async (req, res) => {
     try {
         let cube = await cubeService.findCube(req.params.cubeId);
         let isOwnCube = false;
-        if (cube.creator._id == req.user._id) {
-            isOwnCube = true;
+        if (req.user) {
+            isOwnCube = cube.creator._id == req.user._id ? true : false;
         }
         res.render('partials/details', { ...cube, isOwnCube });
     } catch (err) {
@@ -42,7 +42,6 @@ cubeController.get('/:cubeId', async (req, res) => {
 });
 
 cubeController.get('/:cubeId/delete', isAuth, isOwner, (req, res) => {
-    console.log(req.cube);
     res.render('cube-pages/delete-cube', req.cube);
 });
 
@@ -53,6 +52,7 @@ cubeController.post('/:cubeId/delete', isAuth, isOwner, async (req, res) => {
     }
     catch (err) {
         console.log(err);
+        res.status(404).render('404', err);
     }
 });
 
