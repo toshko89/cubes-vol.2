@@ -29,12 +29,16 @@ cubeController.post('/create', isAuth, async (req, res) => {
 cubeController.get('/:cubeId', async (req, res) => {
     try {
         let cube = await cubeService.findCube(req.params.cubeId);
-        let isOwnCube = cube.creator._id == req.user._id;
-        res.render('partials/details', { ...cube,isOwnCube});
+        let isOwnCube = false;
+        if (cube.creator._id == req.user._id) {
+            isOwnCube = true;
+        }
+        res.render('partials/details', { ...cube, isOwnCube });
     } catch (err) {
         console.log(err);
         res.render('404');
     }
+
 });
 
 cubeController.get('/:cubeId/delete', isAuth, isOwner, (req, res) => {
@@ -59,7 +63,7 @@ cubeController.post('/:cubeId/edit', isAuth, isOwner, async (req, res) => {
     try {
         let { name, description, imageUrl, difficulty } = req.body;
         let cube = { name, description, imageUrl, difficulty };
-        await cubeService.updateCube(req.cube._id,cube);
+        await cubeService.updateCube(req.cube._id, cube);
         res.redirect('/');
     } catch (err) {
         console.log(err);
