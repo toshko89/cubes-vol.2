@@ -42,6 +42,7 @@ cubeController.get('/:cubeId', async (req, res) => {
 });
 
 cubeController.get('/:cubeId/delete', isAuth, isOwner, (req, res) => {
+    console.log(req.cube);
     res.render('cube-pages/delete-cube', req.cube);
 });
 

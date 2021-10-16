@@ -3,6 +3,7 @@ const homeController = require('./controllers/homeController.js');
 const cubeController = require('./controllers/cubeController.js');
 const accessoryController = require('./controllers/accessoryController.js');
 const authController = require('./controllers/authController.js');
+const { errorHandler } = require('./middleWares/errorHandlerMiddleWare.js');
 
 
 const router = new express.Router();
@@ -19,5 +20,7 @@ router.get('/about',(req,res)=>{
 router.get('*',(req,res)=>{
     res.render('404')
 });
+
+router.use(errorHandler);
 
 module.exports = router;

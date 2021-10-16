@@ -24,8 +24,7 @@ authRouter.post('/register', async (req, res) => {
 
         await authService.registerUser(username, password);
 
-        //Login the user after registration 
-        
+        //Login the user after registration  
         const token = await authService.login(username, password);
         res.cookie(config.TOKEN_COOKIE_NAME, token, { httpOnly: true });
         res.redirect('/');
