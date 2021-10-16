@@ -4,7 +4,7 @@ const User = require('../models/User.js');
 const config = require('../config/config.json');
 
 async function registerUser(username, password) {
-    return await User.create({ username, password });
+    return User.create({ username, password });
 }
 
 async function login(username, password) {
